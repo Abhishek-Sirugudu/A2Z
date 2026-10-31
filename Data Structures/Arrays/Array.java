@@ -1,22 +1,59 @@
-import java.util.*;
+public class Array {
+    private int size;
+    private int capacity;
+    private int[] arr;
 
-class Array{
-    public static void main(String[] args) {
+    public Array(int capacity){
+        if(capacity < 0){
+            throw new IllegalArgumentException("Array capacity cannot be negative");
+        }
+        this.capacity = capacity;
+        this.size = 0;
 
-        Scanner s = new Scanner(System.in);
+        arr = new int[capacity];
+    }
 
-        System.out.println("Enter array size");
-        int n = s.nextInt();
-
-        int[] arr = new int[n];
-
-        for(int i = 0; i < n; i++){
-            arr[i] = s.nextInt();
+    private void resize(){
+        if(capacity == 0){   
+            capacity += 2;
+        }else{
+            capacity *= 2;
         }
 
+        int[] copy_arr = new int[capacity];
+
+        for(int i = 0; i< arr.length; i++){
+            copy_arr[i] = arr[i];
+        }
         
+        this.arr = copy_arr;
+        
+    }
 
 
-        s.close();
+
+    public void add(int ele){
+        if(size == capacity){
+            resize();
+        }
+        arr[size] = ele;
+        size++;
+    }
+
+    public int get(int index){
+        if(index < 0 || index >= size){
+           throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+
+        return arr[index];
+    }
+
+    public void set(int index,int ele){
+        if(index < 0 || index >= size){
+            System.out.println("Index is not valid");
+            return;
+        }
+
+        arr[index] = ele;
     }
 }
